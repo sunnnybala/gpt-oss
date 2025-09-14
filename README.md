@@ -12,6 +12,7 @@
 <br>
 
 Welcome to the gpt-oss series, [OpenAI's open-weight models](https://openai.com/open-models/) designed for powerful reasoning, agentic tasks, and versatile developer use cases.
+This Implemenation also supports Fine tuning with Flash Attention and GQA, SWA and attention sinks
 
 We're releasing two flavors of these open models:
 
