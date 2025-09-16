@@ -21,6 +21,8 @@ This implementation now also supports fine-tuning with Flash Attention, Grouped 
 
 The results? ~33 times faster than naïve Pytorch fine-tuning and ~138× more memory-efficient: all using the SAME HARDWARE
 
+##
+
 
 We're releasing two flavors of these open models:
 
