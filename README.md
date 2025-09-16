@@ -17,7 +17,7 @@ Welcome to the gpt-oss series, [OpenAI's open-weight models](https://openai.com/
 
 This implementation now also supports fine-tuning with Flash Attention, Grouped Query Attention (GQA), Sliding Window Attention (SWA), and Attention Sinks — making training dramatically faster and more memory-efficient.
 
-📂 New addition: we’ve introduced a file called backprop_flashattention in the triton/ directory. You can check it out to run fine-tuning with our changes.
+📂 New addition: we’ve introduced a file called backprop_flash_attention_adapter in the triton/ directory. You can check it out to run fine-tuning with our changes.
 
 The results? ~33 times faster than naïve Pytorch fine-tuning and ~138× more memory-efficient: all using the SAME HARDWARE
 
