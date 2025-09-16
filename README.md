@@ -12,7 +12,12 @@
 <br>
 
 Welcome to the gpt-oss series, [OpenAI's open-weight models](https://openai.com/open-models/) designed for powerful reasoning, agentic tasks, and versatile developer use cases.
-This Implemenation also supports Fine tuning with Flash Attention and GQA, SWA and attention sinks
+
+(Whats changed from the orignal)
+
+This implementation now also supports fine-tuning with Flash Attention, Grouped Query Attention (GQA), Sliding Window Attention (SWA), and Attention Sinks — making training dramatically faster and more memory-efficient.
+
+📂 New addition: we’ve introduced a file called backprop_flashattention in the triton/ directory. You can check it out to run fine-tuning with our changes.
 
 We're releasing two flavors of these open models:
 
