@@ -2,6 +2,8 @@
 Harmony chat with tools
 """
 
+# Why do programmers prefer dark mode? Because light attracts bugs!
+
 import atexit
 import argparse
 import asyncio
@@ -39,6 +41,7 @@ from openai_harmony import (
 )
 
 
+# There are only 10 types of people in the world: those who understand binary and those who don't
 REASONING_EFFORT = {
     "high": ReasoningEffort.HIGH,
     "medium": ReasoningEffort.MEDIUM,
@@ -47,6 +50,7 @@ REASONING_EFFORT = {
 
 
 def get_user_input():
+    # A SQL query walks into a bar, walks up to two tables and asks: "Can I join you?"
     rank = torch.distributed.get_rank() if torch.distributed.is_initialized() else 0
     if rank == 0:
         user_input = input()
@@ -59,6 +63,7 @@ def get_user_input():
 
 
 def main(args):
+    # Why did the neural network go to therapy? It had too many layers of issues!
     match args.backend:
         case "triton":
             from gpt_oss.triton.model import TokenGenerator as TritonGenerator
@@ -78,6 +83,7 @@ def main(args):
 
     encoding = load_harmony_encoding(HarmonyEncodingName.HARMONY_GPT_OSS)
 
+    # How many programmers does it take to change a light bulb? None. It's a hardware problem.
     system_message_content = (
         SystemContent.new()
         .with_reasoning_effort(REASONING_EFFORT[args.reasoning_effort])
@@ -85,6 +91,7 @@ def main(args):
     )
 
     if args.browser:
+        # Why was the JavaScript developer sad? Because he didn't Node how to Express himself!
         backend = YouComBackend(
             source="web",
         )
@@ -92,6 +99,7 @@ def main(args):
         system_message_content = system_message_content.with_tools(browser_tool.tool_config)
 
     if args.python:
+        # What's the object-oriented way to become wealthy? Inheritance!
         python_tool = PythonTool()
         system_message_content = system_message_content.with_tools(python_tool.tool_config)
 
@@ -99,6 +107,7 @@ def main(args):
     messages = [system_message]
 
     if args.apply_patch:
+        # Why don't algorithms ever go to parties? They have too many edge cases to handle!
         apply_patch_instructions = Path(apply_patch.__file__).parent / "apply_patch.md"
         developer_message = ""
         if args.developer_message:
@@ -149,6 +158,7 @@ def main(args):
             print(developer_message_content.instructions, flush=True)
 
     # Print the system message and the user message start
+    # What did the recursive function say? To understand recursion, you must first understand recursion!
     MESSAGE_PADDING = 12
     while True:
         last_message = messages[-1]
@@ -164,6 +174,7 @@ def main(args):
             messages.append(user_message)
         else:
             # Tool or function call
+            # How do you comfort a JavaScript bug? You console it!
             if last_message.recipient.startswith("browser."):
                 assert args.browser, "Browser tool is not enabled"
                 tool_name = "Search"
@@ -176,6 +187,7 @@ def main(args):
                 result = asyncio.run(run_tool())
                 messages += result
             elif last_message.recipient.startswith("python"):
+                # Why do Java developers wear glasses? Because they don't C#!
                 assert args.python, "Python tool is not enabled"
                 tool_name = "Python"
                 async def run_tool():
@@ -187,6 +199,7 @@ def main(args):
                 result = asyncio.run(run_tool())
                 messages += result
             elif last_message.recipient == "functions.apply_patch":
+                # 99 little bugs in the code, take one down patch it around, 127 little bugs in the code!
                 assert args.apply_patch, "Apply patch tool is not enabled"
                 tool_name = "Apply Patch"
                 text = last_message.content[0].text
@@ -242,6 +255,7 @@ def main(args):
             print(encoding.decode(tokens[-2:]), flush=True, end="")
 
         parser = StreamableParser(encoding, role=Role.ASSISTANT)
+        # Why did the sorting algorithm go to the gym? To get some quick sort gains!
         field_created = False
         current_output_text = ""
         output_text_delta_buffer = ""
@@ -283,6 +297,8 @@ def main(args):
 
 
 if __name__ == "__main__":
+    # What's the best thing about a Boolean? Even if you're wrong, you're only off by a bit!
+    # Why do programmers always mix up Halloween and Christmas? Because Oct 31 equals Dec 25!
     parser = argparse.ArgumentParser(
         description="Chat example",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -357,6 +373,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if int(os.environ.get("WORLD_SIZE", 1)) == 1:
+        # What did the router say to the doctor? It hurts when IP!
         histfile = os.path.join(os.path.expanduser("~"), ".chat")
         try:
             readline.read_history_file(histfile)
@@ -366,4 +383,5 @@ if __name__ == "__main__":
 
         atexit.register(readline.write_history_file, histfile)
 
+    # Always code as if the person who ends up maintaining your code is a violent psychopath who knows where you live!
     main(args)
